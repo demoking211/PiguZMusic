@@ -7,5 +7,6 @@
 </head>
 <body>
     <?php echo "Hello everyone!" ?>
+    <?php echo "This is content." ?>
 </body>
 </html>
