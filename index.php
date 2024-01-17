@@ -8,5 +8,6 @@
 <body>
     <?php echo "Hello everyone!" ?>
     <?php echo "This is content." ?>
+    <?php echo "Hi Yanfeng" ?>
 </body>
 </html>
