@@ -8,6 +8,7 @@
 <body>
     <?php echo "Hello everyone!" ?>
     <?php echo "This is content." ?>
-    <?php echo "Hi Yanfeng" ?>
+    <?php echo "I am Mingze" ?>
+    <?php echo "I am hong" ?>
 </body>
 </html>
