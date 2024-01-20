@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 function signup_inputs()
 {
-    // <input type="text" name="username" placeholder="Username">
-    // <input type="password" name="password" placeholder="Password">
-    // <input type="password" name="confirm_password" placeholder="Confirm Password">
-    // <input type="text" name="email" placeholder="E-mail">
-
     if(isset($_SESSION["signup_data"]["username"]) && !isset($_SESSION["errors_signup"]["empty_username"]) && !isset($_SESSION["errors_signup"]["username_taken"]))
     {
         echo '<input type="text" name="username" placeholder="Username" value="' . $_SESSION["signup_data"]["username"] . '">';
@@ -69,13 +64,4 @@ function signup_inputs()
 
     unset($_SESSION["signup_data"]);
     unset($_SESSION['errors_signup']);
-}
-
-function check_username_error()
-{
-    if(isset($_SESSION['errors_signup']))
-    {
-        $error = $_SESSION['errors_signup']['empty_username'];
-        echo '<p>' . $error . '</p>';
-    }
 }

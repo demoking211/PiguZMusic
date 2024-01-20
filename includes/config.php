@@ -4,8 +4,8 @@ ini_set('session.use_only_cookies', 1);
 ini_set('session.use_strict_mode', 1);
 
 session_set_cookie_params([
-    // One week or seven days
-    'lifetime' => 604800,
+    // Session lifetime
+    'lifetime' => 604800, // One week or seven days
     'domain' => 'localhost',
     'path' => '/',
     'secure' => true,

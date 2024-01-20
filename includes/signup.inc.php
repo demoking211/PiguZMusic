@@ -15,6 +15,8 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 
         // Validation
         $errors = [];
+
+        // Check for empty input validation
         if(is_input_empty($username))
         {
             $errors["empty_username"] = "Username cannot be empty.";
@@ -31,10 +33,14 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
         {
             $errors["empty_email"] = "E-mail cannot be empty.";
         }
+
+        // Check username validation
         if(is_username_registered($pdo, $username))
         {
             $errors["username_taken"] = "Username has already been taken.";
         }
+
+        // Check email validation
         if(is_email_invalid($email))
         {
             $errors["invalid_email"] = "Invalid e-mail address.";
@@ -43,6 +49,8 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
         {
             $errors["email_taken"] = "E-mail has already been registered.";
         }
+
+        // Check password validation
         if(is_password_invalid($password))
         {
             $errors["invalid_password"] = "Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.";

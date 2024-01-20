@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+// Read functions
 function get_username(object $pdo, string $username)
 {
     $query = "SELECT username FROM users WHERE username = :username;";
@@ -28,6 +29,7 @@ function get_email(object $pdo, string $email)
     return $result;
 }
 
+// Create function
 function set_user(object $pdo, string $username, string $password, string $email)
 {
     $query = "INSERT INTO users (`username`, `passwordHash`, `email`) VALUES (:username, :pwd, :email);";

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+// Validation functions
 function is_input_empty($input)
 {
     if(empty($input))
@@ -86,6 +87,7 @@ function is_password_matched(string $password, string $confirm_password)
     }
 }
 
+// Create function
 function create_user(object $pdo, string $username, string $password, string $email)
 {
     set_user($pdo, $username, $password, $email);
