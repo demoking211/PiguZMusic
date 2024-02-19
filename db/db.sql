@@ -22,7 +22,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `Role` (
-  `id` int NOT NULL ,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -32,9 +32,9 @@ CREATE TABLE `Role` (
 --
 
 INSERT INTO `Role` (`id`, `name`) VALUES
-(1, 'Normal User'),
-(2, 'premium User'),
-(3, 'admin');
+(1, 'Administrator'),
+(2, 'PremiumAccount'),
+(3, 'RegisteredUser');
 
 
 -- --------------------------------------------------------
@@ -55,16 +55,16 @@ CREATE TABLE `UserRole` (
 --
 
 CREATE TABLE `User` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` char(38) NOT NULL ,
   `username` text NOT NULL,
   `passwordHash` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `path` text NOT NULL,
   `created_by` varchar(50) NOT NULL ,
   `created_datetime` datetime(6)  NOT NULL DEFAULT current_timestamp(6),
-  `updated_by` varchar(50) NOT NULL ,
-  `updated_datetime` datetime(6) DEFAULT NULL ON UPDATE current_timestamp(6),
-  `status` tinyint NOT NULL ,
+  `updated_by` varchar(50) NULL ,
+  `updated_datetime` datetime(6) DEFAULT NULL,
+  `status` tinyint NOT NULL DEFAULT '1' ,
   `reamrks` text NOT NULL,
   PRIMARY KEY (`id`)
 
@@ -74,9 +74,9 @@ CREATE TABLE `User` (
 -- Dumping data for table `User`
 --
 
-INSERT INTO `User` (`id`, `username`, `passwordHash`, `email`, `path`, `created_datetime`, `updated_by`, `updated_datetime`, `status`, `reamrks`) VALUES
-(1, 'kangxiang', 'kangxiang123','kangxiang@123','' , '2023-01-27 11:44:10', 'admin', '2023-01-27 11:44:27', 1, 'pls redo'),
-(2, 'yanhong', 'yanhong123','yanhong@123','' , '2023-01-27 11:44:10', 'admin', '2023-01-27 11:44:27', 1, 'pls redo');
+INSERT INTO `User` (`id`, `username`, `passwordHash`, `email`, `path`, `created_by`,`created_datetime`, `updated_by`, `updated_datetime`, `status`, `reamrks`) VALUES
+(1, 'kangxiang', 'kangxiang123','kangxiang@123','','sohai' , '2023-01-27 11:44:10', 'admin', '2023-01-27 11:44:27', 1, 'pls redo'),
+(2, 'yanhong', 'yanhong123','yanhong@123','' ,'sohai', '2023-01-27 11:44:10', 'admin', '2023-01-27 11:44:27', 1, 'pls redo');
 
 -- --------------------------------------------------------
 
@@ -85,16 +85,13 @@ INSERT INTO `User` (`id`, `username`, `passwordHash`, `email`, `path`, `created_
 --
 
 CREATE TABLE `UserPlayList` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `playlist_id` char(38) NOT NULL ,
   `user_id` int NOT NULL,
-  `music_id` int NOT NULL ,
-  `name` varchar(255)  NOT NULL,
-  `description` text NOT NULL,
   `created_by` varchar(50) NOT NULL ,
   `created_datetime` datetime(6)  NOT NULL DEFAULT current_timestamp(6),
   `updated_by` varchar(50) NOT NULL ,
-  `updated_datetime` datetime(6) DEFAULT NULL ON UPDATE current_timestamp(6),
-  `status` tinyint NOT NULL ,
+  `updated_datetime` datetime(6) DEFAULT NULL ,
+  `status` tinyint NOT NULL DEFAULT '1' ,
   `reamrks` text NOT NULL,
   PRIMARY KEY (`id`)
 
@@ -104,17 +101,17 @@ CREATE TABLE `UserPlayList` (
 -- Dumping data for table `UserPlayList`
 --
 
-INSERT INTO `UserPlayList` (`id`, `user_id`, `music_id`,`name`,`description`, `created_by`, `created_datetime`, `updated_by`, `updated_datetime`, `status`, `reamrks`) VALUES
-(1, 1, 2,'try1' ,'still trying 1', 'KangXiang', '2023-01-27 11:44:10','KangXiang', '2023-01-27 11:44:27', 0, 'pls redo'),
-(2, 1, 2 ,'try2','still trying', 'KangXiang', '2023-01-27 11:44:10','KangXiang', '2023-01-27 11:44:27', 0, 'pls redo');
+INSERT INTO `UserPlayList` (`playlist_id`, `user_id`, `created_by`, `created_datetime`, `updated_by`, `updated_datetime`, `status`, `reamrks`) VALUES
+(1, 1, 'shoai', '2023-01-27 11:44:10','KangXiang', '2023-01-27 11:44:27', 0, 'pls redo'),
+(2, 1, 'sohai' , '2023-01-27 11:44:10','KangXiang', '2023-01-27 11:44:27', 0, 'pls redo');
 
 -- --------------------------------------------------------
 --
--- Table structure for table `Music`
+-- Table structure for table `Tracks`
 --
 
-CREATE TABLE `Music` (
-  `id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `Tracks` (
+  `id` char(38) NOT NULL ,
   `genre_id` int NOT NULL,
   `name` varchar(255)  NOT NULL,
   `description` text NOT NULL,
@@ -124,18 +121,18 @@ CREATE TABLE `Music` (
   `created_by` varchar(50) NOT NULL ,
   `created_datetime` datetime(6)  NOT NULL DEFAULT current_timestamp(6),
   `updated_by` varchar(50) NOT NULL ,
-  `updated_datetime` datetime(6) DEFAULT NULL ON UPDATE current_timestamp(6),
-  `status` tinyint NOT NULL ,
+  `updated_datetime` datetime(6) DEFAULT NULL ,
+  `status` tinyint NOT NULL DEFAULT '1' ,
   `reamrks` text NOT NULL,
   PRIMARY KEY (`id`)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `Music`
+-- Dumping data for table `Tracks`
 --
 
-INSERT INTO `Music` (`id`, `genre_id`,`name`,`description`,`thumbnail_path`,`music_path`,`music_premium_path`, `created_by`, `created_datetime`, `updated_by`, `updated_datetime`, `status`, `reamrks`) VALUES
+INSERT INTO `Tracks` (`id`, `genre_id`,`name`,`description`,`thumbnail_path`,`music_path`,`music_premium_path`, `created_by`, `created_datetime`, `updated_by`, `updated_datetime`, `status`, `reamrks`) VALUES
 (1, 1,'try1' ,'still trying 1','','','' , 'KangXiang', '2023-01-27 11:44:10','KangXiang', '2023-01-27 11:44:27', 0, 'pls redo'),
 (2, 1,'try2','still trying','','','', 'KangXiang', '2023-01-27 11:44:10','KangXiang', '2023-01-27 11:44:27', 0, 'pls redo');
 
@@ -145,14 +142,14 @@ INSERT INTO `Music` (`id`, `genre_id`,`name`,`description`,`thumbnail_path`,`mus
 --
 
 CREATE TABLE `Genre` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` char(38) NOT NULL ,
   `name` text NOT NULL,
   `description` text NOT NULL,
   `created_by` varchar(50) NOT NULL ,
   `created_datetime` datetime(6)  NOT NULL DEFAULT current_timestamp(6),
   `updated_by` varchar(50) NOT NULL ,
-  `updated_datetime` datetime(6) DEFAULT NULL ON UPDATE current_timestamp(6),
-  `status` tinyint NOT NULL ,
+  `updated_datetime` datetime(6) DEFAULT NULL ,
+  `status` tinyint NOT NULL DEFAULT '1' ,
   `reamrks` text NOT NULL,
   PRIMARY KEY (`id`)
 
@@ -168,83 +165,83 @@ INSERT INTO `Genre` (`id`, `name`, `description`,  `created_by`, `created_dateti
 
 -- --------------------------------------------------------
 --
--- Table structure for table `RecommendedPlaylistMusic`
+-- Table structure for table `PlaylistTracks`
 --
 
-CREATE TABLE `RecommendedPlaylistMusic` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `recommendedPlaylist_id` int NOT NULL,
-  `music_id` int NOT NULL,
+CREATE TABLE `PlaylistTracks` (
+  `id` char(38) NOT NULL ,
+  `playlist_id` int NOT NULL,
+  `track_id` int NOT NULL,
   `created_by` varchar(50) NOT NULL ,
   `created_datetime` datetime(6)  NOT NULL DEFAULT current_timestamp(6),
   `updated_by` varchar(50) NOT NULL ,
-  `updated_datetime` datetime(6) DEFAULT NULL ON UPDATE current_timestamp(6),
-  `status` tinyint NOT NULL ,
+  `updated_datetime` datetime(6) DEFAULT NULL ,
+  `status` tinyint NOT NULL DEFAULT '1' ,
   `reamrks` text NOT NULL,
   PRIMARY KEY (`id`)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `RecommendedPlaylistMusic`
+-- Dumping data for table `PlaylistTracks`
 --
 
-INSERT INTO `RecommendedPlaylistMusic` (`id`, `recommendedPlaylist_id`, `music_id`,  `created_by`, `created_datetime`, `updated_by`, `updated_datetime`, `status`, `reamrks`) VALUES
+INSERT INTO `PlaylistTracks` (`id`, `playlist_id`, `track_id`,  `created_by`, `created_datetime`, `updated_by`, `updated_datetime`, `status`, `reamrks`) VALUES
 (1, 'normal', 'budong','KangXiang' , '2023-01-27 11:44:10', 'KangXiang', '2023-01-27 11:44:27', 1, 'pls redo'),
 (2, 'premium', 'budong','KangXiang' , '2023-01-27 11:44:10', 'KangXiang', '2023-01-27 11:44:27', 2, 'pls redo');
 
 -- --------------------------------------------------------
 --
--- Table structure for table `RecommendedPlaylist`
+-- Table structure for table `Playlists`
 --
 
-CREATE TABLE `RecommendedPlaylist` (
-  `id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `Playlists` (
+  `id` char(38) NOT NULL ,
   `name` varchar(255)  NOT NULL,
   `description` text NOT NULL,
   `path` text NOT NULL,
   `created_by` varchar(50) NOT NULL ,
   `created_datetime` datetime(6)  NOT NULL DEFAULT current_timestamp(6),
   `updated_by` varchar(50) NOT NULL ,
-  `updated_datetime` datetime(6) DEFAULT NULL ON UPDATE current_timestamp(6),
-  `status` tinyint NOT NULL ,
+  `updated_datetime` datetime(6) DEFAULT NULL ,
+  `status` tinyint NOT NULL DEFAULT '1' ,
   `reamrks` text NOT NULL,
   PRIMARY KEY (`id`)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `RecommendedPlaylist`
+-- Dumping data for table `Playlists`
 --
 
-INSERT INTO `RecommendedPlaylist` (`id`, `name`,`description`,`path`, `created_by`, `created_datetime`, `updated_by`, `updated_datetime`, `status`, `reamrks`) VALUES
+INSERT INTO `Playlists` (`id`, `name`,`description`,`path`, `created_by`, `created_datetime`, `updated_by`, `updated_datetime`, `status`, `reamrks`) VALUES
 (1, 'try1' ,'still trying 1','' , 'KangXiang', '2023-01-27 11:44:10','KangXiang', '2023-01-27 11:44:27', 0, 'pls redo'),
 (2,'try2','still trying','', 'KangXiang', '2023-01-27 11:44:10','KangXiang', '2023-01-27 11:44:27', 0, 'pls redo');
 
 -- --------------------------------------------------------
 --
--- Table structure for table `MusicArtist`
+-- Table structure for table `TrackArtist`
 --
 
-CREATE TABLE `MusicArtist` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `music_id` int NOT NULL,
+CREATE TABLE `TrackArtist` (
+  `id` char(38) NOT NULL ,
+  `track_id` int NOT NULL,
   `artist_id` int NOT NULL,
   `created_by` int NOT NULL ,
   `created_datetime` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_by` int NOT NULL ,
-  `updated_datetime` datetime DEFAULT NULL ON UPDATE current_timestamp(),
-  `status` int NOT NULL ,
+  `updated_datetime` datetime DEFAULT NULL ,
+  `status` int NOT NULL DEFAULT '1' ,
   `reamrks` text NOT NULL,
   PRIMARY KEY (`id`)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `MusicArtist`
+-- Dumping data for table `TrackArtist`
 --
 
-INSERT INTO `MusicArtist` (`id`, `music_id`, `artist_id` , `created_by`, `created_datetime`, `updated_by`, `updated_datetime`, `status`, `reamrks`) VALUES
+INSERT INTO `TrackArtist` (`id`, `track_id`, `artist_id` , `created_by`, `created_datetime`, `updated_by`, `updated_datetime`, `status`, `reamrks`) VALUES
 (1, 1, 1,'KangXiang' , '2023-01-27 11:44:10', 'KangXiang', '2023-01-27 11:44:27', 0, 'pls redo'),
 (2, 1, 1,'KangXiang' , '2023-01-27 11:44:10', 'KangXiang', '2023-01-27 11:44:27', 0, 'pls redo');
 -- --------------------------------------------------------
@@ -253,15 +250,15 @@ INSERT INTO `MusicArtist` (`id`, `music_id`, `artist_id` , `created_by`, `create
 --
 
 CREATE TABLE `Artist` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` char(38) NOT NULL ,
   `name` varchar(255)  NOT NULL,
   `description` text NOT NULL,
   `path` text NOT NULL,
   `created_by` int NOT NULL ,
   `created_datetime` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_by` int NOT NULL ,
-  `updated_datetime` datetime DEFAULT NULL ON UPDATE current_timestamp(),
-  `status` int NOT NULL ,
+  `updated_datetime` datetime DEFAULT NULL,
+  `status` int NOT NULL DEFAULT '1' ,
   `reamrks` text NOT NULL,
   PRIMARY KEY (`id`)
 
