@@ -200,6 +200,7 @@ CREATE TABLE `Playlists` (
   `name` varchar(255)  NOT NULL,
   `description` text NOT NULL,
   `path` text NOT NULL,
+  `isUserPlaylist` tinyint NOT NULL DEFAULT '0',
   `created_by` varchar(50) NOT NULL ,
   `created_datetime` datetime(6)  NOT NULL DEFAULT current_timestamp(6),
   `updated_by` varchar(50) NOT NULL ,
@@ -214,9 +215,9 @@ CREATE TABLE `Playlists` (
 -- Dumping data for table `Playlists`
 --
 
-INSERT INTO `Playlists` (`id`, `name`,`description`,`path`, `created_by`, `created_datetime`, `updated_by`, `updated_datetime`, `status`, `reamrks`) VALUES
-(1, 'try1' ,'still trying 1','' , 'KangXiang', '2023-01-27 11:44:10','KangXiang', '2023-01-27 11:44:27', 0, 'pls redo'),
-(2,'try2','still trying','', 'KangXiang', '2023-01-27 11:44:10','KangXiang', '2023-01-27 11:44:27', 0, 'pls redo');
+INSERT INTO `Playlists` (`id`, `name`,`description`,`path`,`isUserPlaylist`, `created_by`, `created_datetime`, `updated_by`, `updated_datetime`, `status`, `reamrks`) VALUES
+(1, 'try1' ,'still trying 1','' ,0, 'KangXiang', '2023-01-27 11:44:10','KangXiang', '2023-01-27 11:44:27', 0, 'pls redo'),
+(2,'try2','still trying','',0, 'KangXiang', '2023-01-27 11:44:10','KangXiang', '2023-01-27 11:44:27', 0, 'pls redo');
 
 -- --------------------------------------------------------
 --
