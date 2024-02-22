@@ -93,7 +93,7 @@ CREATE TABLE `UserPlayList` (
   `updated_datetime` datetime(6) DEFAULT NULL ,
   `status` tinyint NOT NULL DEFAULT '1' ,
   `reamrks` text NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`playlist_id`)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -270,5 +270,5 @@ CREATE TABLE `Artist` (
 --
 
 INSERT INTO `Artist` (`id`, `name`, `description` , `created_by`, `created_datetime`, `updated_by`, `updated_datetime`, `status`, `reamrks`) VALUES
-(1, 'yifan', 'lianggeshabi','KangXiang' , '2023-01-27 11:44:10', 'KangXiang', '2023-01-27 11:44:27', 0, 'pls redo'),
-(2, 'kunkun', 'yigeshabi','KangXiang' , '2023-01-27 11:44:10', 'KangXiang', '2023-01-27 11:44:27', 0, 'pls redo');
+(1, 'yifan', 'lianggeshabi','1' , '2023-01-27 11:44:10', '1', '2023-01-27 11:44:27', 0, 'pls redo'),
+(2, 'kunkun', 'yigeshabi','1' , '2023-01-27 11:44:10', '1', '2023-01-27 11:44:27', 0, 'pls redo');
