@@ -2,8 +2,8 @@
 
 if($_SERVER["REQUEST_METHOD"] === "POST")
 {
-    $username = $_POST["username"];
-    $password = $_POST["password"];
+    $username = trim($_POST["username"]);
+    $password = trim($_POST["password"]);
 
     try
     {
@@ -26,11 +26,11 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
         {
             $result = get_username($pdo, $username);
 
-            if(is_user_exist($result))
+            if(!is_user_exist($result))
             {
                 $errors["login_incorrect"] = "Incorrect Username or Password.";
             }
-            if(!is_user_exist($result) && is_password_wrong($password, $result["passwordHash"]))
+            else if(is_user_exist($result) && is_password_wrong($password, $result["passwordHash"]))
             {
                 $errors["login_incorrect"] = "Incorrect Username or Password.";
             }
@@ -52,6 +52,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST")
 
         $_SESSION["user_id"] = $result["id"];
         $_SESSION["user_username"] = htmlspecialchars($result["username"]);
+        $_SESSION["user_role_id"] = htmlspecialchars($result["role_id"]);
 
         $_SESSION["last_regeneration"] = time();
 

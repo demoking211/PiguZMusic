@@ -2,13 +2,14 @@
 
 if($_SERVER["REQUEST_METHOD"] === "POST")
 {
-    $username = $_POST["username"];
-    $password = $_POST["password"];
-    $confirm_password = $_POST["confirm_password"];
-    $email = $_POST["email"];
+    $username = trim($_POST["username"]);
+    $password = trim($_POST["password"]);
+    $confirm_password = trim($_POST["confirm_password"]);
+    $email = trim($_POST["email"]);
 
     try
     {
+        require_once 'config.php';
         require_once 'dbh.inc.php';
         require_once 'signup_model.inc.php';
         require_once 'signup_controller.inc.php';
