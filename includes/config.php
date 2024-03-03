@@ -62,3 +62,28 @@ else
         }
     }
 }
+
+function GUIDv4 ($trim = true)
+{
+    mt_srand((double)microtime() * 10000);
+    $charid = strtolower(md5(uniqid(rand(), true)));
+    $hyphen = chr(45);                  // "-"
+    $lbrace = $trim ? "" : chr(123);    // "{"
+    $rbrace = $trim ? "" : chr(125);    // "}"
+    $guidv4 = $lbrace.
+              substr($charid,  0,  8).$hyphen.
+              substr($charid,  8,  4).$hyphen.
+              substr($charid, 12,  4).$hyphen.
+              substr($charid, 16,  4).$hyphen.
+              substr($charid, 20, 12).
+              $rbrace;
+              
+    return $guidv4;
+}
+
+date_default_timezone_set('UTC');
+$date = date('Y-m-d H:i:s');
+$date_utc8 = date('Y-m-d H:i:s', strtotime($date . ' +8 hours'));
+
+$image_path = "../../assets/images";
+$track_path = "../../assets/track_mp3";

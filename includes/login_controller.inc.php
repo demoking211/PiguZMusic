@@ -16,7 +16,7 @@ function is_input_empty($input)
 
 function is_user_exist($result)
 {
-    if(!(is_bool($result) || is_array($result)))
+    if(!empty($result))
     {
         return true;
     }
@@ -26,9 +26,9 @@ function is_user_exist($result)
     }
 }
 
-function is_password_wrong(string $passowrd, string $hashedPassowrd)
+function is_password_wrong(string $passowrd, string $hashedPassword)
 {
-    if(!password_verify($passowrd, $hashedPassowrd))
+    if(!password_verify($passowrd, $hashedPassword))
     {
         return true;
     }

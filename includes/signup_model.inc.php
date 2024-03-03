@@ -32,7 +32,9 @@ function get_email(object $pdo, string $email)
 // Create function
 function set_user(object $pdo, string $username, string $password, string $email)
 {
-    $query = "INSERT INTO users (`username`, `passwordHash`, `email`) VALUES (:username, :pwd, :email);";
+    $id = GUIDv4();
+
+    $query = "INSERT INTO `users` (`id`, `username`, `passwordHash`, `email`, `created_by`, `created_datetime`) VALUES (:id, :username, :pwd, :email, :id, :current_datetime);";
     $stmt = $pdo->prepare($query);
 
     $options = [
@@ -41,9 +43,27 @@ function set_user(object $pdo, string $username, string $password, string $email
 
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT, $options);
 
+    $stmt->bindParam(":id", $id);
     $stmt->bindParam(":username", $username);
     $stmt->bindParam(":pwd", $hashedPassword);
     $stmt->bindParam(":email", $email);
+    $stmt->bindParam(":current_datetime", $date_utc8);
+
+    $stmt->execute();
+
+    $role_id = 3;
+
+    $query2 = "INSERT INTO `userrole` (`user_id`, `role_id`) VALUES (:user_id, :role_id);";
+    $stmt = $pdo->prepare($query2);
+
+    $options = [
+        'cost' => 12
+    ];
+
+    $hashedPassword = password_hash($password, PASSWORD_BCRYPT, $options);
+
+    $stmt->bindParam(":user_id", $id);
+    $stmt->bindParam(":role_id", $role_id);
 
     $stmt->execute();
 }

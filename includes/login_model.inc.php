@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 function get_username(object $pdo, string $username)
 {
-    $query = "SELECT * FROM users WHERE username = :username OR email = :username;";
+    $query = "SELECT * FROM users as u INNER JOIN `userrole` as ur on u.id = ur.user_id WHERE username = :username OR email = :username;";
     $stmt = $pdo->prepare($query);
 
     $stmt->bindParam(":username", $username);
