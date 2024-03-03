@@ -44,4 +44,4 @@
 </div>
 
 <script src="js/track_list.js"></script>
-<script src="js/script.js"></script>
+<script src="js/player_script.js"></script>
