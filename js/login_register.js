@@ -1,6 +1,15 @@
-function errorMessage(message) {
-    var errorMessage = $('#login-error-messages'),
+function errorMessage(path, message) {
+
+    if(path == "login")
+    {
+        var errorMessage = $('#login-error-messages'),
         errorArea = $('#login-error-area');
+    }
+    else
+    {
+        var errorMessage = $('#signup-error-messages'),
+        errorArea = $('#signup-error-area');
+    }
 
     errorMessage.html(message);
     errorArea.addClass("show");
@@ -45,12 +54,12 @@ function validateLoginForm() {
         password = $('#password');
 
     if (!username.val()) {
-        errorMessage("Please enter a username.");
+        errorMessage("login", "Please enter a username.");
         return false;
     }
 
     else if (!password.val()) {
-        errorMessage("Please enter a password.");
+        errorMessage("login", "Please enter a password.");
         return false;
     }
 
@@ -67,32 +76,32 @@ function validateRegisterForm() {
         agreement = $('#agree');
 
     if (!rusername.val()) {
-        errorMessage("Please enter a username.");
+        errorMessage("signup", "Please enter a username.");
         return false;
     }
 
     else if (!email.val()) {
-        errorMessage("Please enter a email.");
+        errorMessage("signup", "Please enter a email.");
         return false;
     }
 
     else if (!rpassword.val()) {
-        errorMessage("Please enter a password.")
+        errorMessage("signup", "Please enter a password.")
         return false;
     }
 
     else if (!cpassword.val()) {
-        errorMessage("Please confirm your password.");
+        errorMessage("signup", "Please confirm your password.");
         return false;
     }
 
     else if (rpassword.val() !== cpassword.val()) {
-        errorMessage("Password and confirm password do not match.");
+        errorMessage("signup", "Password and confirm password do not match.");
         return false;
     }
 
     else if (!agreement.prop("checked")) {
-        errorMessage("Please agree to the terms and policy.");
+        errorMessage("signup", "Please agree to the terms and policy.");
         return false;
     }
     
