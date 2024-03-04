@@ -2,35 +2,40 @@
 
 declare(strict_types=1);
 
-function login_inputs()
+
+
+function login_errors()
 {
-    echo '<input type="text" name="username" placeholder="Username/E-mail">';
     if(isset($_SESSION["errors_login"]))
     {
+        echo '<div id="login-error-area" class="alert alert-danger fade d-flex align-items-center show" role="alert">
+        <i class="fa fa-exclamation-triangle me-2" aria-hidden="true"></i>';
         if(isset($_SESSION["errors_login"]["empty_username"]))
         {
-            echo '<p>' . $_SESSION['errors_login']['empty_username'] . '</p>';
+            echo '<div id="login-error-messages">' . $_SESSION['errors_login']['empty_username'];
         }
-    }
-    echo '<input type="password" name="password" placeholder="Password">';
-    if(isset($_SESSION["errors_login"]))
-    {
         if(isset($_SESSION["errors_login"]["empty_password"]))
         {
-            echo '<p>' . $_SESSION['errors_login']['empty_password'] . '</p>';
+            echo '<div id="login-error-messages">' . $_SESSION['errors_login']['empty_password'];
         }
-    }
-    if(isset($_SESSION["errors_login"]))
-    {
         if(isset($_SESSION["errors_login"]["login_incorrect"]) && !isset($_SESSION["errors_login"]["empty_username"]) && !isset($_SESSION["errors_login"]["empty_password"]))
         {
-            echo '<p>' . $_SESSION['errors_login']['login_incorrect'] . '</p>';
+            echo '<div id="login-error-messages">' . $_SESSION['errors_login']['login_incorrect'];
         }
     }
+    else
+    {
+        echo '<div id="login-error-area"  class="alert alert-danger fade d-flex align-items-center error-area" role="alert">
+        <i class="fa fa-exclamation-triangle me-2" aria-hidden="true"></i>
+        <div id="login-error-messages"></div>';
+    }
+    echo '</div>';
+
     if(isset($_GET['login']) && $_GET['login'] === "success")
     {
         echo "Login successfully.";
     }
 
+    
     unset($_SESSION['errors_login']);
 }

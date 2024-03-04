@@ -34,7 +34,7 @@ function set_user(object $pdo, string $username, string $password, string $email
 {
     $id = GUIDv4();
 
-    $query = "INSERT INTO `users` (`id`, `username`, `passwordHash`, `email`, `created_by`, `created_datetime`) VALUES (:id, :username, :pwd, :email, :id, :current_datetime);";
+    $query = "INSERT INTO `users` (`id`, `username`, `passwordHash`, `email`, `created_by`) VALUES (:id, :username, :pwd, :email, :id);";
     $stmt = $pdo->prepare($query);
 
     $options = [
@@ -47,7 +47,6 @@ function set_user(object $pdo, string $username, string $password, string $email
     $stmt->bindParam(":username", $username);
     $stmt->bindParam(":pwd", $hashedPassword);
     $stmt->bindParam(":email", $email);
-    $stmt->bindParam(":current_datetime", $date_utc8);
 
     $stmt->execute();
 

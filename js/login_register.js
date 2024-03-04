@@ -1,6 +1,6 @@
 function errorMessage(message) {
-    var errorMessage = $('.error-message'),
-        errorArea = $('#error-area');
+    var errorMessage = $('#login-error-messages'),
+        errorArea = $('#login-error-area');
 
     errorMessage.html(message);
     errorArea.addClass("show");
@@ -14,10 +14,28 @@ function switchForm() {
     console.log("switchForm");
 
     let registerForm = $('.register_form'),
-        loginForm = $('.login_form');
+        loginForm = $('.login_form'),
+        loginErrorArea = $('#login-error-area'),
+        signupErrorArea = $('#signup-error-area');
 
     registerForm.toggleClass("d-none");
     loginForm.toggleClass("d-none");
+    if(loginForm.attr('class').indexOf('d-none') !== -1)
+    {
+        loginErrorArea.removeClass("show");
+        if(signupErrorArea.html().trim() === '')
+        {
+            signupErrorArea.addClass("show");
+        }
+    }
+    else
+    {
+        if(loginErrorArea.html().trim() === '')
+        {
+            loginErrorArea.addClass("show");
+        }
+        signupErrorArea.removeClass("show");
+    }
 }
 
 function validateLoginForm() {
