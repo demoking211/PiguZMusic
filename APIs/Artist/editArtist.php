@@ -1,0 +1,118 @@
+<?php
+
+if ($_SERVER["REQUEST_METHOD"] === "POST")
+{
+    try
+    {
+        require_once '../ErrorHandler.php';
+        require_once '../../includes/config.php';
+        require_once '../../includes/dbh.inc.php';
+
+        $id = trim(isset($_POST["id"]) ? $_POST["id"] : "");
+        $name = trim(isset($_POST["name"]) ? $_POST["name"] : "");
+        $description = trim(isset($_POST["description"]) ? $_POST["description"] : "");
+
+        $query = "SELECT * FROM `artists` WHERE `id` = :id";
+
+        $stmt = $pdo->prepare($query);
+
+        $stmt->bindParam(":id", $id);
+
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $errorController = new ErrorController();
+        
+        if(!empty($result))
+        {
+            $user_id = $_SESSION['user_id'];
+
+            if(empty($name))
+            {
+                $name = $result["name"];
+            }
+            if(empty($description))
+            {
+                $description = $result["description"];
+            }
+
+            if (isset($_FILES['thumbnail']) && $_FILES['thumbnail']['error'] === UPLOAD_ERR_OK) 
+            {
+                $thumbnailName = $_FILES['thumbnail']['name'];
+                $thumbnailExtension = pathinfo($thumbnailName, PATHINFO_EXTENSION);
+                $thumbnailSize = $_FILES['thumbnail']['size'];
+                $thumbnailTmp = $_FILES['thumbnail']['tmp_name'];
+                $thumbnailType = $_FILES['thumbnail']['type'];
+
+                $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                if (!in_array($thumbnailType, $allowedTypes)) {
+                    echo $errorController->index(400, [], ["Only JPG, PNG, and GIF files are allowed."]);
+                    die();
+                }
+        
+                $maxSize = 5 * 1024 * 1024; // 5MB
+                if ($thumbnailSize > $maxSize) {
+                    echo $errorController->index(400, [], ["File size exceeds the maximum limit (5MB)."]);
+                    die();
+                }
+
+                $thumbnailPath = $image_path . $result["path"];
+                if (file_exists($thumbnailPath)) 
+                {
+                    unlink($thumbnailPath);
+                }
+        
+                $newThumnailFilename = DIRECTORY_SEPARATOR . $date_utc8 . '_' . $result["id"] . '.' . $thumbnailExtension;
+                $thumbnailPath = $image_path . $newThumnailFilename;
+
+                move_uploaded_file($thumbnailTmp, $thumbnailPath);
+            }
+            else
+            {
+                $newThumnailFilename = $result["path"];
+            }
+
+            $query2 = "UPDATE `artists` SET `name` = :title, `description` = :descr, `path` = :thumbnailPath, `updated_by` = :user_id, `updated_datetime` = :currentDateTime WHERE `id` = :id";
+
+            $stmt = $pdo->prepare($query2);
+
+            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":title", $name);
+            $stmt->bindParam(":descr", $description);
+            $stmt->bindParam(":thumbnailPath", $newThumnailFilename);
+            $stmt->bindParam(":user_id", $user_id);
+            $stmt->bindParam(":currentDateTime", $datetime_utc8);
+
+            $stmt->execute();
+
+            $stmt = $pdo->prepare($query);
+
+            $stmt->bindParam(":id", $id);
+    
+            $stmt->execute();
+    
+            $data["artist"] = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            echo $errorController->index(200, $data);
+        }
+        else
+        {
+            echo $errorController->index(404, [], ["Artist not found."]);
+        }
+    
+        $pdo = null;
+        $stmt = null;
+    
+        die();
+    }
+    catch(PDOException $e)
+    {
+        die("Query failed: " . $e->getMessage());
+    }
+}
+else
+{
+    echo "Request failed.";
+    die();
+}
