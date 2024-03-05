@@ -83,7 +83,8 @@ function GUIDv4 ($trim = true)
 
 date_default_timezone_set('UTC');
 $date = date('Y-m-d H:i:s');
-$date_utc8 = date('Y-m-d H:i:s', strtotime($date . ' +8 hours'));
+$datetime_utc8 = date('Y-m-d H:i:s', strtotime($date . ' +8 hours'));
+$date_utc8 = date('Ymd', strtotime($date . ' +8 hours'));
 
 $image_path = "../../assets/images";
-$track_path = "../../assets/track_mp3";
+$track_path = "../../assets/tracks";
