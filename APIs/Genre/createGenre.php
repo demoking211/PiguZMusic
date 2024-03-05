@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
         $stmt->bindParam(":title", $title);
         $stmt->bindParam(":descr", $description);
         $stmt->bindParam(":user_id", $user_id);
-        $stmt->bindParam(":currentDateTime", $date_utc8);
+        $stmt->bindParam(":currentDateTime", $datetime_utc8);
     
         $stmt->execute();
 
@@ -41,10 +41,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
         if(!empty($data))
         {
             echo $errorController->index(200, $data);
-        }
-        else
-        {
-            echo $errorController->index(404, [], ["Genre not found."]);
         }
     
         $pdo = null;

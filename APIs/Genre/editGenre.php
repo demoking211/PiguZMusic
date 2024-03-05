@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
             $stmt->bindParam(":title", $title);
             $stmt->bindParam(":descr", $description);
             $stmt->bindParam(":user_id", $user_id);
-            $stmt->bindParam(":currentDateTime", $date_utc8);
+            $stmt->bindParam(":currentDateTime", $datetime_utc8);
 
             $stmt->execute();
 
