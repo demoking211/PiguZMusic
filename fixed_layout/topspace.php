@@ -1,7 +1,7 @@
 <div class="top_bar fixed-top">
     <div class="search_wrapper">
-        <input type="search" size="50">
-        <i class="fa fa-search" aria-hidden="true" style="color:#fff"></i>
+        <input type="text" id="search-input" size="50">
+        <i style="cursor:pointer;" id="search-btn" class="fa fa-search" aria-hidden="true" style="color:#fff"></i>
     </div>
     <div>
         <form action="includes/logout.inc.php" method="POST">
@@ -14,3 +14,59 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        $("#search-btn").click(function()
+        {
+            var input = $("#search-input").val();
+            if(input != "")
+            {
+                $.ajax({
+                    url:"./APIs/Track/getAllTracks.php",
+                    method:"GET",
+                    data:{title:input,
+                          modules:['artist']},
+                    success:function(response)
+                    {
+                        // Example of retrieving first element data.
+                        var results = JSON.parse(response);
+                        if(results.statusCode === 200)
+                        {
+                            console.log(results["data"]["tracks"]);
+                        }
+                        else
+                        {
+                            console.log(results.statusCode);
+                            console.log(results.message);
+                        }
+                    }
+                });
+                $.ajax({
+                    url:"./APIs/Artist/getAllArtists.php",
+                    method:"GET",
+                    data:{name:input,
+                          modules:['track']},
+                    success:function(response)
+                    {
+                        // Example of retrieving first element data.
+                        var results = JSON.parse(response);
+                        if(results.statusCode === 200)
+                        {
+                            console.log(results["data"]["artists"]);
+                        }
+                        else
+                        {
+                            console.log(results.statusCode);
+                            console.log(results.message);
+                        }
+                    }
+                });
+            }
+            else
+            {
+                console.log("nothing");
+            }
+        });
+    });
+</script>
