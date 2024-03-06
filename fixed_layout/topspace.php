@@ -1,6 +1,6 @@
 <div class="top_bar fixed-top">
     <div class="search_wrapper">
-        <input type="text" size="50">
+        <input type="search" size="50">
         <i class="fa fa-search" aria-hidden="true" style="color:#fff"></i>
     </div>
     <div>
