@@ -3,6 +3,7 @@
     height: 100vh;
     width: 100vw;
     position: relative;
+    overflow: hidden;
 }
 
 .main_wrapper .login_form {
@@ -52,7 +53,9 @@ label {
     font-size: .9rem;
 }
 
-.form_block input[type=text] {
+.form_block input[type=text],
+.form_block input[type=password],
+.form_block input[type=email] {
     width: 100%;
     height: 100%;
     background: #ffffff;
