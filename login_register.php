@@ -49,7 +49,7 @@ else
                                 <input type="text" id="username" name="username" placeholder="Username">
                             </div>
                             <div class="form_block col-12">
-                                <input type="text" id="password" name="password" placeholder="Password">
+                                <input type="password" id="password" name="password" placeholder="Password">
                             </div>
                             <div class="form_block col-12">
                                 <input class="main_btn" type="submit" name="login" value="LOGIN" onclick="validateLoginForm()">

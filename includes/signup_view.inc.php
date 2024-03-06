@@ -18,20 +18,20 @@ function signup_inputs()
     echo '<div class="form_block col-12 col-lg-6 ps-1">';
     if(isset($_GET["signup"]) && isset($_SESSION["signup_data"]["email"]) && !isset($_SESSION["errors_signup"]["empty_email"]) && !isset($_SESSION["errors_signup"]["email_taken"]) && !isset($_SESSION["errors_signup"]["invalid_email"]))
     {
-        echo '<input type="text" id="email" name="email" placeholder="Email" value="' . $_SESSION["signup_data"]["email"] . '">';
+        echo '<input type="email" id="email" name="email" placeholder="Email" value="' . $_SESSION["signup_data"]["email"] . '">';
     }
     else
     {
-        echo '<input type="text" id="email" name="email" placeholder="Email">';
+        echo '<input type="email" id="email" name="email" placeholder="Email">';
     }
     echo '</div>';
 
     echo '<div class="form_block col-12 col-lg-6 ps-1">
-    <input type="text" id="reg_password" name="password" placeholder="Password">
+    <input type="password" id="reg_password" name="password" placeholder="Password">
     </div>';
 
     echo '<div class="form_block col-12 col-lg-6 ps-1">
-    <input type="text" id="cpassword" name="confirm_password" placeholder="Confirm Password">
+    <input type="password" id="cpassword" name="confirm_password" placeholder="Confirm Password">
     </div>';
 
     unset($_SESSION["signup_data"]);
