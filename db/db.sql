@@ -48,6 +48,13 @@ CREATE TABLE `UserRoles` (
   `role_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `UserRoles`
+--
+
+INSERT INTO `UserRoles` (`user_id`, `role_id`) VALUES
+('8d5a3029-662f-4b5d-9518-7c54fb31bd49', 1);
+
 
 -- --------------------------------------------------------
 --
@@ -72,6 +79,14 @@ CREATE TABLE `Users` (
 
 -- --------------------------------------------------------
 
+--
+-- Dumping data for table `Users`
+--
+
+INSERT INTO `Users` (`id`, `username`, `passwordHash`, `email`, `created_by`) VALUES
+('8d5a3029-662f-4b5d-9518-7c54fb31bd49', 'admin', '$2y$10$sAPWafpE7UC6/4BR0AfcVusQaTgVjvKMfI6o5aiPgaGhwboD8WcbC', 'admin@gmail.com', '8d5a3029-662f-4b5d-9518-7c54fb31bd49');
+
+-- --------------------------------------------------------
 --
 -- Table structure for table `UserPlayList`
 --
