@@ -370,11 +370,10 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Player Control -->
-                    <?php require 'fixed_layout/musicplayer.php'?>
-                    
                 </div>
+                <!-- Player Control -->
+                <?php require 'fixed_layout/musicplayer.php'?>
+                
                 <script>
                     // Added space on top and bottom of content box
                     $(document).ready(function(){
