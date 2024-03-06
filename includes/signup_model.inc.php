@@ -52,7 +52,7 @@ function set_user(object $pdo, string $username, string $password, string $email
 
     $role_id = 3;
 
-    $query2 = "INSERT INTO `userrole` (`user_id`, `role_id`) VALUES (:user_id, :role_id);";
+    $query2 = "INSERT INTO `userroles` (`user_id`, `role_id`) VALUES (:user_id, :role_id);";
     $stmt = $pdo->prepare($query2);
 
     $options = [
