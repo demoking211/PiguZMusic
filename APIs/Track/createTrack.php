@@ -65,6 +65,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
 
         $newPremiumMusicFilename = DIRECTORY_SEPARATOR . $date_utc8 . '_' . $id . '_2' . '.' . $premiumMusicExtension;
         $premiumMusicPath = $track_path . $newPremiumMusicFilename;
+
+        if (!file_exists($image_path)) {
+            mkdir($image_path, 0777, true); // Creates the directory recursively
+        }
+        if (!file_exists($track_path)) {
+            mkdir($track_path, 0777, true); // Creates the directory recursively
+        }
     
         if(move_uploaded_file($thumbnailTmp, $thumbnailPath) && move_uploaded_file($musicTmp, $musicPath) && move_uploaded_file($premiumMusicTmp, $premiumMusicPath))
         {

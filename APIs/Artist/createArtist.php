@@ -41,6 +41,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
         $newFilename = DIRECTORY_SEPARATOR . $date_utc8 . '_' . $id . '.' . $extension;
 
         $thumbnailPath = $image_path . $newFilename;
+
+        if (!file_exists($image_path)) {
+            mkdir($image_path, 0777, true); // Creates the directory recursively
+        }
     
         if(move_uploaded_file($thumbnailTmp, $thumbnailPath))
         {
