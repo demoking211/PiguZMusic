@@ -12,16 +12,28 @@
         <div class="profile_box dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             <img class="img-fluid" src="https://dummyimage.com/1300x2300/" alt="">
         </div>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu mt-1">
             <li><a href="#" class="dropdown-item">My Profile</a></li>
-            <li><a href="./pricelist.php/" class="dropdown-item">Subscription Plan</a></li>
-            <li><a href="#" class="dropdown-item">Logout</a></li>
+            <li><a href="./pricelist.php" class="dropdown-item">Subscription Plan</a></li>
+            <li><a class="dropdown-item" id="logout-btn" style="cursor: pointer;">Logout</a></li>
         </ul>
     </div>
 </div>
 
 <script>
     $(document).ready(function(){
+        $("#logout-btn").click(function()
+        {
+            $.ajax({
+                url:"./includes/logout.inc.php",
+                method:"POST",
+                success:function(response)
+                {
+                    window.location.href = './login_register.php';
+                }
+            });
+        });
+
         $("#search-btn").click(function()
         {
             var input = $("#search-input").val();
