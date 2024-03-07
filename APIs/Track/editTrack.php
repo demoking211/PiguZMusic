@@ -71,6 +71,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
                 $newThumnailFilename = DIRECTORY_SEPARATOR . $date_utc8 . '_' . $result["id"] . '.' . $thumbnailExtension;
                 $thumbnailPath = $image_path . $newThumnailFilename;
 
+                if (!file_exists($image_path)) {
+                    mkdir($image_path, 0777, true); // Creates the directory recursively
+                }
+
                 move_uploaded_file($thumbnailTmp, $thumbnailPath);
             }
             else
@@ -95,6 +99,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
                 $newMusicFilename = DIRECTORY_SEPARATOR . $date_utc8 . '_' . $result["id"] . '_1' . '.' . $musicExtension;
                 $musicPath = $track_path . $newMusicFilename;
 
+                if (!file_exists($image_path)) {
+                    mkdir($image_path, 0777, true); // Creates the directory recursively
+                }
+
                 move_uploaded_file($musicTmp, $musicPath);
             }
             else
@@ -117,6 +125,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
                 if (file_exists($premiumMusicPath)) 
                 {
                     unlink($premiumMusicPath);
+                }
+
+                if (!file_exists($image_path)) {
+                    mkdir($image_path, 0777, true); // Creates the directory recursively
                 }
 
                 move_uploaded_file($premiumMusicTmp, $premiumMusicPath);

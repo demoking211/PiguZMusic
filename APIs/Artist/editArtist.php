@@ -58,6 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
                 }
 
                 $thumbnailPath = $image_path . $result["path"];
+                
                 if (file_exists($thumbnailPath)) 
                 {
                     unlink($thumbnailPath);
@@ -65,6 +66,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
         
                 $newThumnailFilename = DIRECTORY_SEPARATOR . $date_utc8 . '_' . $result["id"] . '.' . $thumbnailExtension;
                 $thumbnailPath = $image_path . $newThumnailFilename;
+
+                if (!file_exists($image_path)) {
+                    mkdir($image_path, 0777, true); // Creates the directory recursively
+                }
 
                 move_uploaded_file($thumbnailTmp, $thumbnailPath);
             }
