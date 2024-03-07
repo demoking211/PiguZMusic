@@ -3,15 +3,20 @@
         <input type="text" id="search-input" size="50">
         <i style="cursor:pointer;" id="search-btn" class="fa fa-search" aria-hidden="true" style="color:#fff"></i>
     </div>
-    <div>
+    <!-- <div>
         <form action="includes/logout.inc.php" method="POST">
             <button>Logout</button>
         </form>
-    </div>
-    <div class="profile_wrapper">
-        <div class="profile_box">
-            <img class="img-fluid" src="https://dummyimage.com/300x300/" alt="">
+    </div> -->
+    <div class="profile_wrapper dropdown">
+        <div class="profile_box dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <img class="img-fluid" src="https://dummyimage.com/1300x2300/" alt="">
         </div>
+        <ul class="dropdown-menu">
+            <li><a href="#" class="dropdown-item">My Profile</a></li>
+            <li><a href="./pricelist.php/" class="dropdown-item">Subscription Plan</a></li>
+            <li><a href="#" class="dropdown-item">Logout</a></li>
+        </ul>
     </div>
 </div>
 
