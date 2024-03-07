@@ -4,7 +4,7 @@
     --sidebarWidth: 20%;
     --mainFontType: 'Inter', sans-serif;
     --sectionSpace: 3rem;
-    --normal-text-size: 14px;
+    --mainTextSize: 14px;
     --mainBgColor: #060028;
     --mainColor01: #05001E;
     --mainBorder: 4px solid #01B3FF;
@@ -343,7 +343,7 @@ p {
     flex: 0 0 60%;
     padding-left: 2rem;
     text-align: left;
-    font-size: var(--normal-text-size);
+    font-size: var(--mainTextSize);
 }
 
 .queue_track_duration {
