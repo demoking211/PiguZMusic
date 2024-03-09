@@ -88,3 +88,7 @@ $date_utc8 = date('Ymd', strtotime($date . ' +8 hours'));
 
 $image_path = "../../assets/images";
 $track_path = "../../assets/tracks";
+
+$domain = "http://localhost/PiguZMusic/";
+$getImagePath = "assets/images";
+$getTrackPath = "assets/tracks";
