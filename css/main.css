@@ -30,6 +30,7 @@
 }
 
 body {
+    color: #fff !important;
     font-family: var(--mainFontType) !important;
 }
 
@@ -43,6 +44,11 @@ p {
 
 .pb_sec {
     margin-bottom: var(--sectionSpace);
+}
+
+a {
+    color: unset !important;
+    text-decoration: unset !important;
 }
 
 /* playlist page */
@@ -125,7 +131,7 @@ p {
     height: fit-content;
     width: calc(100% - var(--sidebarWidth));
     justify-content: space-between;
-    padding: 30px 60px;
+    padding: 30px 50px;
     background: #060028;
     margin-left: auto;
 }
@@ -135,10 +141,12 @@ p {
     border-radius: 50px;
     border-style: none;
     margin-right: 20px;
+    padding: 0px 10px;
 }
 
 .search_wrapper i {
     font-size: 20px;
+    color: #fff;
 }
 
 /* top bar - Profile */
@@ -160,7 +168,7 @@ p {
     object-fit: cover;
 }
 
-.profile_wrapper{
+.profile_wrapper {
     height: 50px;
 }
 
@@ -378,4 +386,93 @@ p {
 
 .main_player .player_control {
     margin-top: 20px;
+}
+
+/* Search */
+#search {
+    background: var(--mainBgColor);
+    position: absolute;
+    top: 0;
+    width: calc(100% - var(--sidebarWidth));
+}
+
+.search_artist_img {
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    overflow: hidden;
+}
+
+.search_artist_img img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+div#close_search {
+    font-size: 1.7rem;
+    position: absolute;
+    right: 3rem;
+    line-height: 1.2;
+}
+
+.search_track_img {
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    overflow: hidden;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.search_track_img i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 2.5rem;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    opacity: 0;
+    transition: all .2s linear;
+}
+
+.search_track_img:after{
+    position: absolute;
+    content:"";
+    width: 100%;
+    height: 100%;
+    background: #00000030;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: all .3s linear;
+}
+
+.search_track_img:hover:after,
+.search_track_img:hover i{
+    opacity: 1;
+}
+
+.search_track_img img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    object-position: center;
+}
+
+.search_track_box {
+    width: 90%;
+    padding-bottom: 30px;
+}
+
+.search_track_wrapper .col-lg-3 {
+    flex: 0 0 20%;
+    max-width: 20%;
 }

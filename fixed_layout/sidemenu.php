@@ -4,9 +4,8 @@
     </div>
     <div class="sidebar_menu">
         <ul class="list-unstyled">
-            <li><i class="fa fa-home" aria-hidden="true"></i> Home</li>
-            <li><i class="fa fa-th-large" aria-hidden="true"></i> Category</li>
-            <li><i class="fa fa-list" aria-hidden="true"></i> Playlist</li>
+            <li><a href="/PiguZMusic"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+            <li><a href="/PiguZMusic/playlist.php"><i class="fa fa-list" aria-hidden="true"></i> Playlist</a></li>
         </ul>
     </div>
     <hr>

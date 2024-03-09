@@ -27,7 +27,7 @@ require_once 'includes/config.php';
                     <?php require 'fixed_layout/topspace.php'?>
 
                     <!-- Content Here -->
-                    <div class="main_content text-white">
+                    <div class="main_content" id="core">
                         <div id="main_index">
                             <div class="page_header pb_sec">
                                 <h1>HOME</h1>
@@ -63,20 +63,11 @@ require_once 'includes/config.php';
 
                                                 function showTracks(track, index, arr)
                                                 {
-                                                    let arrSingle = arr[index];
                                                     var imgPath = "<?php echo $domain . $getImagePath?>" + "\\" + arr[index].thumbnail_path;
                                                     var trackPath = "<?php echo $domain . $getTrackPath?>" + "\\" + arr[index].music_path;
                                                     var artist = "Artist";
                                                     
                                                     var htmlContent = '<div class="s_box">' +
-                                                                        // '<div class="s_img_wrapper" onclick="loadMusic(' + "'"
-                                                                        //     + arr[index].music_path + "'"
-                                                                        //     + "," + "'" + arr[index].name + "'" 
-                                                                        //     + "," + "'" + imgPath + "'"
-                                                                        //     + "," + "'" + artist + "'" 
-                                                                        //     + "," + "'" + arr[index].genre[0].name + "'"
-                                                                        //     + "," + "'" + trackDataString + "'"
-                                                                        //     + ')">' +
                                                                         '<div class="s_img_wrapper" onclick="loadMusic(' + "'" + arr[index].id + "'" 
                                                                                 + "," + "'" + imgPath + "'"
                                                                                 + "," + "'" + artist + "'" 
@@ -384,17 +375,40 @@ require_once 'includes/config.php';
                             </div>                        
                         </div>
                     </div>
+
+                    <!-- Search Here -->
+                    <div class="main_content d-none" id="search">
+                        <div class="search_trigger d-flex align-items-start">
+                            <h2 class="mb-5" id="search_result">Best Match</h2>
+                            <div id="close_search" style="cursor: pointer"><i class="fa fa-times"></i></div>
+                        </div>
+                        <h3 class="mb-3">Artist</h3>
+                        <div class="artist_area">
+                            <div class="container-fluid">
+                                <div class="row align-items-center"></div>
+                            </div>
+                        </div>
+                        <h3 class="mb-3 mt-5">Track</h3>
+                        <div class="track_area d-flex justify-content-center flex-column">
+                            <div class="search_track_wrapper">
+                                <div class="container-fluid">
+                                    <div class="row"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                
                 <!-- Player Control -->
                 <?php require 'fixed_layout/musicplayer.php'?>
                 <script>
                     // Added space on top and bottom of content box
                     $(document).ready(function(){
-                        var topBarHeight = $(".top_bar").outerHeight();
-                        var playerBarHeight = $(".player_wrapper").outerHeight();
+                        var topBarHeight = $(".top_bar").outerHeight() + 50;
+                        var playerBarHeight = $(".player_wrapper").outerHeight() + 50;
                         $(".main_content").css({
-                            'margin-top' : topBarHeight,
-                            'margin-bottom' : playerBarHeight
+                            'padding-top' : topBarHeight,
+                            'padding-bottom' : playerBarHeight
                         });
                     });
                 </script>
