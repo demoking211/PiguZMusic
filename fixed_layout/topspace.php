@@ -8,7 +8,7 @@
             <img class="img-fluid" src="https://dummyimage.com/1300x2300/" alt="">
         </div>
         <ul class="dropdown-menu mt-1">
-            <li><a href="#" class="dropdown-item">My Profile</a></li>
+            <li><a href="/PiguZMusic/userProfile.php" class="dropdown-item">My Profile</a></li>
             <li><a href="./pricelist.php" class="dropdown-item">Subscription Plan</a></li>
             <li><a class="dropdown-item" id="logout-btn" style="cursor: pointer;">Logout</a></li>
         </ul>
