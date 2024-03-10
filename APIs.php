@@ -2,6 +2,15 @@
 
 require_once 'includes/config.php';
 
+
+if(isset($_SESSION['user_id']) && isset($_SESSION['user_role_id']))
+{
+    echo "You are logged in as " . $_SESSION['user_username'];
+}
+else if(!isset($_SESSION['user_id']))
+{
+    echo "Please login";
+}
 ?>
 
 <!DOCTYPE html>
@@ -13,22 +22,6 @@ require_once 'includes/config.php';
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body onload="getDatas()">
-    <?php
-    
-        if(isset($_SESSION['user_id']) && $_SESSION['user_role_id'] == 1)
-        {
-            echo "You are logged in as " . $_SESSION['user_username'];
-        }
-        else if(!isset($_SESSION['user_id']))
-        {
-            echo "Please login";
-        }
-        else if(isset($_SESSION['user_role_id']))
-        {
-            echo "You are not allowed to use APIs.";
-        }
-
-    ?>
     <hr>
     <h2>APIs</h2>
     <div>
@@ -38,6 +31,26 @@ require_once 'includes/config.php';
     </div>
     <p id="results"></p>
     <div>
+        <h3>Register: </h3>
+        <div>
+            <div>
+                <label>Username: </label>
+                <input type="text" id="register-username" name="register-username">
+            </div>
+            <div>
+                <labe>Email: </label>
+                <input type="text" id="register-email" name="register-email">
+            </div>
+            <div>
+                <labe>Password: </label>
+                <input type="text" id="register-password" name="register-password">
+            </div>
+            <div>
+                <labe>Comfirm Password: </label>
+                <input type="text" id="register-confrim-password" name="register-confrim-password">
+            </div>
+            <button id="register-btn">Create</button>
+        </div>
         <h3>Get Playlist by ID: </h3>
         <div>
             <div>
@@ -365,12 +378,186 @@ require_once 'includes/config.php';
             <button id="delete-artist-btn">Confirm</button>
         </div>
     </div>
+    <div>
+        <h3>Get ArtistTrack by ArtistTrackID: </h3>
+        <div>
+            <div>
+                <label>Artist Track ID: </label>
+                <input type="text" id="get-artisttrack-byArtistTrackID-artisttrack-id" name="get-artisttrack-byArtistTrackID-artisttrack-id">
+            </div>
+            <button id="get-artisttrack-byArtistTrackID-btn">Get</button>
+        </div>
+        <h3>Get ArtistTrack: </h3>
+        <div>
+            <div>
+                <label>Artist ID: </label>
+                <input type="text" id="get-artisttrack-byArtistORTrackID-artist-id" name="get-artisttrack-byArtistORTrackID-artist-id">
+            </div>
+            <div>
+                <label>Track ID: </label>
+                <input type="text" id="get-artisttrack-byArtistORTrackID-track-id" name="get-artisttrack-byArtistORTrackID-track-id">
+            </div>
+            <button id="get-artisttrack-byArtistORTrackID-btn">Get</button>
+        </div>
+        <h3>Create ArtistTrack: </h3>
+        <div>
+            <div>
+                <label>Artist ID: </label>
+                <input type="text" id="artisttrack-artist-id" name="artisttrack-artist-id">
+            </div>
+            <div>
+                <label>Track ID: </label>
+                <input type="text" id="artisttrack-track-id" name="artisttrack-track-id">
+            </div>
+            <button id="create-artisttrack-btn">Create</button>
+        </div>
+        <h3>Edit ArtistTrack: </h3>
+        <div>
+            <div>
+                <label>Artist Track ID: </label>
+                <input type="text" id="edit-artisttrack-id" name="edit-artisttrack-id">
+            </div>
+            <div>
+                <label>Artist ID (Optional): </label>
+                <input type="text" id="edit-artisttrack-artist-id" name="edit-artisttrack-artist-id">
+            </div>
+            <div>
+                <label>Track ID(Optional): </label>
+                <input type="text" id="edit-artisttrack-track-id" name="edit-artisttrack-track-id">
+            </div>
+            <button id="edit-artisttrack-btn">Edit</button>
+        </div>
+        <h3>Delete ArtistTrack: </h3>
+        <div>
+            <div>
+                <label>Artist Track ID: </label>
+                <input type="text" id="artisttrack-id" name="artisttrack-id">
+            </div>
+            <button id="delete-artisttrack-btn">Confirm</button>
+        </div>
+    </div>
+    <div>
+        <h3>Get PlaylistTrack by PlaylistTrackID: </h3>
+        <div>
+            <div>
+                <label>Playlist Track ID: </label>
+                <input type="text" id="get-playlisttrack-byPlaylistTrackID-playlisttrack-id" name="get-playlisttrack-byPlaylistTrackID-playlisttrack-id">
+            </div>
+            <button id="get-playlisttrack-byPlaylistTrackID-btn">Get</button>
+        </div>
+        <h3>Get PlaylistTrack: </h3>
+        <div>
+            <div>
+                <label>Playlist ID: </label>
+                <input type="text" id="get-playlisttrack-byPlaylistORTrackID-playlist-id" name="get-playlisttrack-byPlaylistORTrackID-playlist-id">
+            </div>
+            <div>
+                <label>Track ID: </label>
+                <input type="text" id="get-playlisttrack-byPlaylistORTrackID-track-id" name="get-playlisttrack-byPlaylistORTrackID-track-id">
+            </div>
+            <button id="get-playlisttrack-byPlaylistORTrackID-btn">Get</button>
+        </div>
+        <h3>Create PlaylistTrack: </h3>
+        <div>
+            <div>
+                <label>Playlist ID: </label>
+                <input type="text" id="playlisttrack-playlist-id" name="playlistrack-playlist-id">
+            </div>
+            <div>
+                <label>Track ID: </label>
+                <input type="text" id="playlisttrack-track-id" name="playlisttrack-track-id">
+            </div>
+            <button id="create-playlisttrack-btn">Create</button>
+        </div>
+        <h3>Edit PlaylistTrack: </h3>
+        <div>
+            <div>
+                <label>Playlist Track ID: </label>
+                <input type="text" id="edit-playlisttrack-id" name="edit-playlisttrack-id">
+            </div>
+            <div>
+                <label>Playlist ID (Optional): </label>
+                <input type="text" id="edit-playlisttrack-playlist-id" name="edit-playlisttrack-playlist-id">
+            </div>
+            <div>
+                <label>Track ID(Optional): </label>
+                <input type="text" id="edit-playlisttrack-track-id" name="edit-playlisttrack-track-id">
+            </div>
+            <button id="edit-playlisttrack-btn">Edit</button>
+        </div>
+        <h3>Delete PlaylistTrack: </h3>
+        <div>
+            <div>
+                <label>Playlist Track ID: </label>
+                <input type="text" id="playlisttrack-id" name="playlisttrack-id">
+            </div>
+            <button id="delete-playlisttrack-btn">Confirm</button>
+        </div>
+    </div>
+    <div>
+        <h3>Get UserPlaylist by UserPlaylistID: </h3>
+        <div>
+            <div>
+                <label>User Playlist ID: </label>
+                <input type="text" id="get-userplaylist-byUserPlaylistID-userplaylist-id" name="get-userplaylist-byUserPlaylistID-userplaylist-id">
+            </div>
+            <button id="get-userplaylist-byUserPlaylistID-btn">Get</button>
+        </div>
+        <h3>Get UserPlaylist: </h3>
+        <div>
+            <div>
+                <label>Playlist ID: </label>
+                <input type="text" id="get-userplaylist-byPlaylistORUserID-playlist-id" name="get-userplaylist-byPlaylistORUserID-playlist-id">
+            </div>
+            <div>
+                <label>User ID: </label>
+                <input type="text" id="get-userplaylist-byPlaylistORUserID-user-id" name="get-userplaylist-byPlaylistORUserID-user-id">
+            </div>
+            <button id="get-userplaylist-byPlaylistORUserID-btn">Get</button>
+        </div>
+        <h3>Create UserPlaylist: </h3>
+        <div>
+            <div>
+                <label>Playlist ID: </label>
+                <input type="text" id="userplaylist-playlist-id" name="userplaylist-playlist-id">
+            </div>
+            <div>
+                <label>User ID: </label>
+                <input type="text" id="userplaylist-user-id" name="userplaylist-user-id">
+            </div>
+            <button id="create-userplaylist-btn">Create</button>
+        </div>
+        <h3>Edit UserPlaylist: </h3>
+        <div>
+            <div>
+                <label>User Playlist ID: </label>
+                <input type="text" id="edit-userplaylist-id" name="edit-userplaylist-id">
+            </div>
+            <div>
+                <label>Playlist ID (Optional): </label>
+                <input type="text" id="edit-userplaylist-playlist-id" name="edit-userplaylist-playlist-id">
+            </div>
+            <div>
+                <label>User ID(Optional): </label>
+                <input type="text" id="edit-userplaylist-user-id" name="edit-userplaylist-user-id">
+            </div>
+            <button id="edit-userplaylist-btn">Edit</button>
+        </div>
+        <h3>Delete UserPlaylist: </h3>
+        <div>
+            <div>
+                <label>User Playlist ID: </label>
+                <input type="text" id="userplaylist-id" name="userplaylist-id">
+            </div>
+            <button id="delete-userplaylist-btn">Confirm</button>
+        </div>
+    </div>
 </body>
 <script src="./js/APIsScript.js"></script>
 <script>
     function getDatas()
     {
-        var getGenres = document.getElementById('getAll-genre-btn');
-        getGenres.click();
+        var getArtists = document.getElementById('getAll-artist-btn');
+        getArtists.click();
     }
 </script>
