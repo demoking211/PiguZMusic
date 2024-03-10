@@ -5,7 +5,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
     try
     {
         require_once '../ErrorHandler.php';
+        require_once '../../includes/config.php';
         require_once '../../includes/dbh.inc.php';
+
+        $errorController = new ErrorController();
+
+        $user_role = $_SESSION['user_role_id'];
+        if($user_role != 1)
+        {
+            echo $errorController->index(403, [], ["Forbidden: You don't have permission to access this resource."]);
+            die();
+        }
 
         $playlist_id = isset($_POST["playlistId"]) ? $_POST["playlistId"] : "";
 
@@ -18,8 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
         $stmt->execute();
 
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        $errorController = new ErrorController();
         
         if(!empty($data))
         {

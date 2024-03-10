@@ -10,6 +10,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
 
         $errorController = new ErrorController();
 
+        $user_role = $_SESSION['user_role_id'];
+        if($user_role != 1)
+        {
+            echo $errorController->index(403, [], ["Forbidden: You don't have permission to access this resource."]);
+            die();
+        }
+
         $user_id = $_SESSION['user_id'];
         
         $title = trim(isset($_POST['title']) ? $_POST["title"] : "");

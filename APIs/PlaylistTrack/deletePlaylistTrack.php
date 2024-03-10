@@ -16,35 +16,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
             echo $errorController->index(403, [], ["Forbidden: You don't have permission to access this resource."]);
             die();
         }
+        
+        $playlistTrack_id = trim(isset($_POST["playlistTrackId"]) ? $_POST["playlistTrackId"] : "");
 
-        $genre_id = isset($_POST["genreId"]) ? $_POST["genreId"] : "";
-
-        $query = "SELECT * FROM `genres` WHERE `id` = :genre_id";
+        $query = "SELECT * FROM `playlisttracks` WHERE `id` = :id";
 
         $stmt = $pdo->prepare($query);
 
-        $stmt->bindParam(":genre_id", $genre_id);
+        $stmt->bindParam(":id", $playlistTrack_id);
 
         $stmt->execute();
 
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        if(!empty($data))
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if(empty($result))
         {
-            $query2 = "DELETE FROM `genres` WHERE `id` = :genre_id";
-
-            $stmt = $pdo->prepare($query2);
-
-            $stmt->bindParam(":genre_id", $genre_id);
-
-            $stmt->execute();
-
-            echo $errorController->index(200);
+            echo $errorController->index(404, [], ["PlaylistTrack Not Found."]);
+            die();
         }
-        else
-        {
-            echo $errorController->index(404, [], ["Genre not found."]);
-        }
+
+        $query2 = "DELETE FROM `playlisttracks` WHERE `id` = :playlistTrack_id";
+
+        $stmt = $pdo->prepare($query2);
+
+        $stmt->bindParam(":playlistTrack_id", $playlistTrack_id);
+
+        $stmt->execute();
+
+        echo $errorController->index(200);
     
         $pdo = null;
         $stmt = null;

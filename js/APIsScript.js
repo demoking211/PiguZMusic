@@ -33,6 +33,49 @@ $(document).ready(function(){
         }
     });
 
+    $("#register-btn").click(function()
+    {
+        var data = 
+        {
+            username: $('#register-username').val(),
+            email: $('#register-email').val(),
+            password: $('#register-password').val(),
+            confirmPassword: $('#register-confrim-password').val()
+        }
+        var formData = new FormData();
+        for (var item in data) {
+            formData.append(item, data[item]);
+        }
+
+        if(formData.get("username") != "" && formData.get("email") != "" && formData.get("password") && formData.get("confirmPassword"))
+        {
+            $.ajax({
+                url:"./APIs/register.php",
+                method:"POST",
+                data:formData,
+                contentType: false,
+                processData: false,
+                success:function(response)
+                {
+                    var results = JSON.parse(response);
+                    if(results.statusCode === 200)
+                    {
+                        console.log(results["data"]["user"]);
+                    }
+                    else
+                    {
+                        console.log(results.statusCode);
+                        console.log(results.message);
+                    }
+                }
+            });
+        }
+        else
+        {
+            console.log("nothing");
+        }
+    });
+
     $("#get-playlist-btn").click(function()
     {
         var id = $("#get-playlist-id").val();
@@ -440,14 +483,14 @@ $(document).ready(function(){
                 var results = JSON.parse(response);
                 if(results.statusCode === 200)
                 {
-                    console.log(results["data"]["tracks"]);
+                    // console.log(results["data"]["tracks"]);
+                    results["data"]["tracks"].forEach(showTracks);
                 }
                 else
                 {
                     console.log(results.statusCode);
                     console.log(results.message);
                 }
-                console.log(response)
             }
         });
     });
@@ -645,6 +688,7 @@ $(document).ready(function(){
                 if(results.statusCode === 200)
                 {
                     console.log(results["data"]["artists"]);
+                    // results["data"]["artists"].forEach(showArtists);
                 }
                 else
                 {
@@ -778,8 +822,554 @@ $(document).ready(function(){
         }
     });
 
-    function showTracks(track, index, arr)
+    $("#get-artisttrack-byArtistTrackID-btn").click(function()
     {
-        document.getElementById("results").innerHTML += "<div>" + arr[index].name + "</div>";
-    }
+        var artistTrackId = $('#get-artisttrack-byArtistTrackID-artisttrack-id').val();
+
+        if(artistTrackId != "")
+        {
+            $.ajax({
+                url:"./APIs/ArtistTrack/getArtistTrack.php",
+                method:"GET",
+                data:{artistTrackId: artistTrackId},
+                success:function(response)
+                {
+                    var results = JSON.parse(response);
+                    if(results.statusCode === 200)
+                    {
+                        console.log(results["data"]["artisttracks"]);
+                    }
+                    else
+                    {
+                        console.log(results.statusCode);
+                        console.log(results.message);
+                    }
+                    console.log(response)
+                }
+            });
+        }
+        else
+        {
+            console.log("nothing");
+        }
+    });
+
+    $("#get-artisttrack-byArtistORTrackID-btn").click(function()
+    {
+        var artistId = $('#get-artisttrack-byArtistORTrackID-artist-id').val();
+        var trackId = $('#get-artisttrack-byArtistORTrackID-track-id').val();
+
+        if(artistId != "" || trackId != "")
+        {
+            $.ajax({
+                url:"./APIs/ArtistTrack/getArtistTrack.php",
+                method:"GET",
+                data:{artistId: artistId,
+                    trackId: trackId},
+                success:function(response)
+                {
+                    var results = JSON.parse(response);
+                    if(results.statusCode === 200)
+                    {
+                        console.log(results["data"]["artisttracks"]);
+                    }
+                    else
+                    {
+                        console.log(results.statusCode);
+                        console.log(results.message);
+                    }
+                    console.log(response)
+                }
+            });
+        }
+        else
+        {
+            console.log("nothing");
+        }
+    });
+
+    $("#create-artisttrack-btn").click(function()
+    {
+        var data = 
+        {
+            artistId: $('#artisttrack-artist-id').val(),
+            trackId: $('#artisttrack-track-id').val()
+        }
+        var formData = new FormData();
+        for (var item in data) {
+            formData.append(item, data[item]);
+        }
+
+        if(formData.get("artistId") != "" && formData.get("trackId") != "")
+        {
+            $.ajax({
+                url:"./APIs/ArtistTrack/createArtistTrack.php",
+                method:"POST",
+                data:formData,
+                contentType: false,
+                processData: false,
+                success:function(response)
+                {
+                    var results = JSON.parse(response);
+                    if(results.statusCode === 200)
+                    {
+                        console.log(results["data"]["artisttrack"]);
+                    }
+                    else
+                    {
+                        console.log(results.statusCode);
+                        console.log(results.message);
+                    }
+                }
+            });
+        }
+        else
+        {
+            console.log("nothing");
+        }
+    });
+
+    $("#edit-artisttrack-btn").click(function()
+    {
+        var data = 
+        {
+            artistTrackId : $('#edit-artisttrack-id').val(),
+            artistId: $('#edit-artisttrack-artist-id').val(),
+            trackId: $('#edit-artisttrack-track-id').val()
+        }
+        var formData = new FormData();
+        for (var item in data) {
+            formData.append(item, data[item]);
+        }
+
+        if(formData.get("artistTrackId") != "")
+        {
+            $.ajax({
+                url:"./APIs/ArtistTrack/editArtistTrack.php",
+                method:"POST",
+                data:formData,
+                contentType: false,
+                processData: false,
+                success:function(response)
+                {
+                    var results = JSON.parse(response);
+                    if(results.statusCode === 200)
+                    {
+                        console.log(results["data"]["artisttrack"]);
+                    }
+                    else
+                    {
+                        console.log(results.statusCode);
+                        console.log(results.message);
+                    }
+                }
+            });
+        }
+        else
+        {
+            console.log("nothing");
+        }
+    });
+
+    $("#delete-artisttrack-btn").click(function()
+    {
+        var id = $("#artisttrack-id").val();
+        if(id != "")
+        {
+            $.ajax({
+                url:"./APIs/ArtistTrack/deleteArtistTrack.php",
+                method:"POST",
+                data:{artistTrackId:id},
+
+                success:function(response)
+                {
+                    var results = JSON.parse(response);
+                    if(results.statusCode === 200)
+                    {
+                        console.log("Successfully Removed.");
+                    }
+                    else
+                    {
+                        console.log(results.statusCode);
+                        console.log(results.message);
+                    }
+                }
+            });
+        }
+        else
+        {
+            console.log("nothing");
+        }
+    });
+
+    $("#get-playlisttrack-byPlaylistTrackID-btn").click(function()
+    {
+        var playlistTrackId = $('#get-playlisttrack-byPlaylistTrackID-playlisttrack-id').val();
+
+        if(playlistTrackId != "")
+        {
+            $.ajax({
+                url:"./APIs/PlaylistTrack/getPlaylistTrack.php",
+                method:"GET",
+                data:{playlistTrackId: playlistTrackId},
+                success:function(response)
+                {
+                    var results = JSON.parse(response);
+                    if(results.statusCode === 200)
+                    {
+                        console.log(results["data"]["playlisttracks"]);
+                    }
+                    else
+                    {
+                        console.log(results.statusCode);
+                        console.log(results.message);
+                    }
+                    console.log(response)
+                }
+            });
+        }
+        else
+        {
+            console.log("nothing");
+        }
+    });
+
+    $("#get-playlisttrack-byPlaylistORTrackID-btn").click(function()
+    {
+        var playlistId = $('#get-playlisttrack-byPlaylistORTrackID-playlist-id').val();
+        var trackId = $('#get-playlisttrack-byPlaylistORTrackID-track-id').val();
+
+        if(playlistId != "" || trackId != "")
+        {
+            $.ajax({
+                url:"./APIs/PlaylistTrack/getPlaylistTrack.php",
+                method:"GET",
+                data:{playlistId: playlistId,
+                    trackId: trackId},
+                success:function(response)
+                {
+                    var results = JSON.parse(response);
+                    if(results.statusCode === 200)
+                    {
+                        console.log(results["data"]["playlisttracks"]);
+                    }
+                    else
+                    {
+                        console.log(results.statusCode);
+                        console.log(results.message);
+                    }
+                    console.log(response)
+                }
+            });
+        }
+        else
+        {
+            console.log("nothing");
+        }
+    });
+
+    $("#create-playlisttrack-btn").click(function()
+    {
+        var data = 
+        {
+            playlistId: $('#playlisttrack-playlist-id').val(),
+            trackId: $('#playlisttrack-track-id').val()
+        }
+        var formData = new FormData();
+        for (var item in data) {
+            formData.append(item, data[item]);
+        }
+
+        if(formData.get("playlistId") != "" && formData.get("trackId") != "")
+        {
+            $.ajax({
+                url:"./APIs/PlaylistTrack/createPlaylistTrack.php",
+                method:"POST",
+                data:formData,
+                contentType: false,
+                processData: false,
+                success:function(response)
+                {
+                    var results = JSON.parse(response);
+                    if(results.statusCode === 200)
+                    {
+                        console.log(results["data"]["playlisttrack"]);
+                    }
+                    else
+                    {
+                        console.log(results.statusCode);
+                        console.log(results.message);
+                    }
+                }
+            });
+        }
+        else
+        {
+            console.log("nothing");
+        }
+    });
+
+    $("#edit-playlisttrack-btn").click(function()
+    {
+        var data = 
+        {
+            playlistTrackId : $('#edit-playlisttrack-id').val(),
+            playlistId: $('#edit-playlisttrack-playlist-id').val(),
+            trackId: $('#edit-playlisttrack-track-id').val()
+        }
+        var formData = new FormData();
+        for (var item in data) {
+            formData.append(item, data[item]);
+        }
+
+        if(formData.get("playlistTrackId") != "")
+        {
+            $.ajax({
+                url:"./APIs/PlaylistTrack/editPlaylistTrack.php",
+                method:"POST",
+                data:formData,
+                contentType: false,
+                processData: false,
+                success:function(response)
+                {
+                    var results = JSON.parse(response);
+                    if(results.statusCode === 200)
+                    {
+                        console.log(results["data"]["playlisttrack"]);
+                    }
+                    else
+                    {
+                        console.log(results.statusCode);
+                        console.log(results.message);
+                    }
+                }
+            });
+        }
+        else
+        {
+            console.log("nothing");
+        }
+    });
+
+    $("#delete-playlisttrack-btn").click(function()
+    {
+        var id = $("#playlisttrack-id").val();
+        if(id != "")
+        {
+            $.ajax({
+                url:"./APIs/PlaylistTrack/deletePlaylistTrack.php",
+                method:"POST",
+                data:{playlistTrackId:id},
+
+                success:function(response)
+                {
+                    var results = JSON.parse(response);
+                    if(results.statusCode === 200)
+                    {
+                        console.log("Successfully Removed.");
+                    }
+                    else
+                    {
+                        console.log(results.statusCode);
+                        console.log(results.message);
+                    }
+                }
+            });
+        }
+        else
+        {
+            console.log("nothing");
+        }
+    });
+
+    $("#get-userplaylist-byUserPlaylistID-btn").click(function()
+    {
+        var userPlaylistId = $('#get-userplaylist-byUserPlaylistID-userplaylist-id').val();
+
+        if(userPlaylistId != "")
+        {
+            $.ajax({
+                url:"./APIs/UserPlaylist/getUserPlaylist.php",
+                method:"GET",
+                data:{userPlaylistId: userPlaylistId},
+                success:function(response)
+                {
+                    var results = JSON.parse(response);
+                    if(results.statusCode === 200)
+                    {
+                        console.log(results["data"]["userplaylists"]);
+                    }
+                    else
+                    {
+                        console.log(results.statusCode);
+                        console.log(results.message);
+                    }
+                    console.log(response)
+                }
+            });
+        }
+        else
+        {
+            console.log("nothing");
+        }
+    });
+
+    $("#get-userplaylist-byPlaylistORUserID-btn").click(function()
+    {
+        var playlistId = $('#get-userplaylist-byPlaylistORUserID-playlist-id').val();
+        var userId = $('#get-userplaylist-byPlaylistORUserID-user-id').val();
+
+        if(playlistId != "" || userId != "")
+        {
+            $.ajax({
+                url:"./APIs/UserPlaylist/getUserPlaylist.php",
+                method:"GET",
+                data:{playlistId: playlistId,
+                    userId: userId},
+                success:function(response)
+                {
+                    var results = JSON.parse(response);
+                    if(results.statusCode === 200)
+                    {
+                        console.log(results["data"]["userplaylists"]);
+                    }
+                    else
+                    {
+                        console.log(results.statusCode);
+                        console.log(results.message);
+                    }
+                    console.log(response)
+                }
+            });
+        }
+        else
+        {
+            console.log("nothing");
+        }
+    });
+
+    $("#create-userplaylist-btn").click(function()
+    {
+        var data = 
+        {
+            playlistId: $('#userplaylist-playlist-id').val(),
+            userId: $('#userplaylist-user-id').val()
+        }
+        var formData = new FormData();
+        for (var item in data) {
+            formData.append(item, data[item]);
+        }
+
+        if(formData.get("playlistId") != "" && formData.get("userId") != "")
+        {
+            $.ajax({
+                url:"./APIs/UserPlaylist/createUserPlaylist.php",
+                method:"POST",
+                data:formData,
+                contentType: false,
+                processData: false,
+                success:function(response)
+                {
+                    var results = JSON.parse(response);
+                    if(results.statusCode === 200)
+                    {
+                        console.log(results["data"]["userplaylist"]);
+                    }
+                    else
+                    {
+                        console.log(results.statusCode);
+                        console.log(results.message);
+                    }
+                }
+            });
+        }
+        else
+        {
+            console.log("nothing");
+        }
+    });
+
+    $("#edit-userplaylist-btn").click(function()
+    {
+        var data = 
+        {
+            userPlaylistId : $('#edit-userplaylist-id').val(),
+            playlistId: $('#edit-userplaylist-playlist-id').val(),
+            userId: $('#edit-userplaylist-user-id').val()
+        }
+        var formData = new FormData();
+        for (var item in data) {
+            formData.append(item, data[item]);
+        }
+
+        if(formData.get("userPlaylistId") != "")
+        {
+            $.ajax({
+                url:"./APIs/UserPlaylist/editUserPlaylist.php",
+                method:"POST",
+                data:formData,
+                contentType: false,
+                processData: false,
+                success:function(response)
+                {
+                    var results = JSON.parse(response);
+                    if(results.statusCode === 200)
+                    {
+                        console.log(results["data"]["userplaylist"]);
+                    }
+                    else
+                    {
+                        console.log(results.statusCode);
+                        console.log(results.message);
+                    }
+                }
+            });
+        }
+        else
+        {
+            console.log("nothing");
+        }
+    });
+
+    $("#delete-userplaylist-btn").click(function()
+    {
+        var id = $("#userplaylist-id").val();
+        if(id != "")
+        {
+            $.ajax({
+                url:"./APIs/UserPlaylist/deleteUserPlaylist.php",
+                method:"POST",
+                data:{userPlaylistId:id},
+
+                success:function(response)
+                {
+                    var results = JSON.parse(response);
+                    if(results.statusCode === 200)
+                    {
+                        console.log("Successfully Removed.");
+                    }
+                    else
+                    {
+                        console.log(results.statusCode);
+                        console.log(results.message);
+                    }
+                }
+            });
+        }
+        else
+        {
+            console.log("nothing");
+        }
+    });
+
+    // function showTracks(track, index, arr)
+    // {
+    //     document.getElementById("results").innerHTML += "<div>" + arr[index].music_premium_path + "</div>";
+    // }
+
+    // function showArtists(artist, index, arr)
+    // {
+    //     document.getElementById("results").innerHTML += "<div>" + arr[index].name + "</div>";
+    //     // arr[index].tracks.forEach(showTracks);
+    // }
 });
