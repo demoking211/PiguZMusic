@@ -476,3 +476,7 @@ div#close_search {
     flex: 0 0 20%;
     max-width: 20%;
 }
+
+.modal-content {
+    background-color: #060028 !important;
+}
