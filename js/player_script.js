@@ -22,6 +22,8 @@ function loadMusic(trackData, trackimg, trackartist, trackpath){
     trackImg.attr('src', trackimg);
     trackArtist.html(trackartist);
     mainAudio.attr('src', trackpath);
+
+    playMusic();
 }
 
 function getMusic(trackID) {
