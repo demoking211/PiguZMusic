@@ -5,28 +5,45 @@ const trackImg = $('.track_img img'),
       trackArtist = $('.track_artist p span'),
       trackCategory = $('.track_category p span'),
       mainAudio = $('#main-audio'),
-      playBtn = $('#play-pause'),
-      prevBtn = $('#prev'),
-      nextBtn = $('#next'),
+      playBtn = $('.btnC.play'),
+      prevBtn = $('.btnC.prev'),
+      nextBtn = $('.btnC.next'),
       progressArea = $('.slider_bar'),
+      mainProgressArea = $('.main_slider_bar'),
       progressBar = $('.slider_progress'),
-      currentTime = $('#currentTime'),
-      totalTime = $('#totalTime');
+      currentTime = $('.currentTime'),
+      totalTime = $('.totalTime');
 
-let musicIndex = Math.floor((Math.random() * allMusic.length) + 1); // random index
 isMusicPaused = true;
 
-$(window).on("load", function(){
-    console.log(musicIndex);
-    loadMusic(musicIndex);
-});
+function loadMusic(trackData, trackimg, trackartist, trackpath){
+    console.log(trackpath);
+    getMusic(trackData);
+    trackImg.attr('src', trackimg);
+    trackArtist.html(trackartist);
+    mainAudio.attr('src', trackpath);
 
-function loadMusic(indexNumb){
-    trackImg.attr('src', allMusic[indexNumb - 1].img);
-    trackName.html(allMusic[indexNumb - 1].name);
-    trackArtist.html(allMusic[indexNumb - 1].artist);
-    trackCategory.html(allMusic[indexNumb - 1].category);
-    mainAudio.attr('src', allMusic[indexNumb - 1].src);
+    playMusic();
+}
+
+function getMusic(trackID) {
+    datas = [];
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "http://localhost/PiguZMusic/APIs/Track/getTrack.php?modules[]=genre&modules[]=artist&trackId=" + trackID);
+    xhr.setRequestHeader("Accept", "/");
+    var data = "";
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && this.status == 200) {
+            data = xhr.responseText;
+            var lists = JSON.parse(data);
+            console.log(lists);
+            let trackInfo = lists["data"]["track"];            
+            trackName.html(trackInfo[0].name);
+            trackCategory.html(trackInfo[0].genre[0].name);
+            //mainAudio.attr('src', trackInfo[0].music_path.src);
+        }
+    };
+    xhr.send();
 }
 
 function playMusic(){
@@ -96,12 +113,23 @@ mainAudio.on("loadeddata", function () {
     totalTime.html(`${totalMin}:${totalSec}`);
 });
 
-progressArea.on("click", function(e){
+// Player bar click
+progressArea.on("click", function(e) {
     let progressWidth = progressArea[0].clientWidth;
     let clickedOffsetX = e.offsetX;
     let songDuration = mainAudio[0].duration;
 
     mainAudio[0].currentTime = (clickedOffsetX / progressWidth) * songDuration;
+    playMusic();
+});
+
+// Main player click
+mainProgressArea.on("click", function(e){
+    let main_progressWidth = mainProgressArea[0].clientWidth;
+    let main_clickedOffsetX = e.offsetX;
+    let main_songDuration = mainAudio[0].duration;
+
+    mainAudio[0].currentTime = (main_clickedOffsetX / main_progressWidth) * main_songDuration;
     playMusic();
 });
 
