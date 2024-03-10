@@ -59,4 +59,28 @@ function set_user(object $pdo, string $username, string $password, string $email
     $stmt->bindParam(":role_id", $role_id);
 
     $stmt->execute();
+
+    $playlist_id = GUIDv4();
+    $playlist_name = "Episodes for later";
+    $playlist_description = "Auto Playlist";
+    $isUserPlaylist = 1;
+
+    $query3 = "INSERT INTO `playlists` (`id`, `name`, `description`, `isUserPlaylist`, `created_by`) VALUES (:playlist_id, :playlist_name, :playlist_description, :isUserPlaylist, :user_id);";
+    $stmt = $pdo->prepare($query3);
+
+    $stmt->bindParam(":playlist_id", $playlist_id);
+    $stmt->bindParam(":playlist_name", $playlist_name);
+    $stmt->bindParam(":playlist_description", $playlist_description);
+    $stmt->bindParam(":isUserPlaylist", $isUserPlaylist);
+    $stmt->bindParam(":user_id", $id);
+
+    $stmt->execute();
+
+    $query4 = "INSERT INTO `userplaylists` (`playlist_id`, `user_id`, `created_by`) VALUES (:playlist_id, :user_id, :user_id);";
+    $stmt = $pdo->prepare($query4);
+
+    $stmt->bindParam(":playlist_id", $playlist_id);
+    $stmt->bindParam(":user_id", $id);
+
+    $stmt->execute();
 }

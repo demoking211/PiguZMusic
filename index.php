@@ -45,7 +45,7 @@ require_once 'includes/config.php';
                                                     console.log("getDatas");
                                                     datas = [];
                                                     let xhr = new XMLHttpRequest();
-                                                    xhr.open("GET", "http://localhost/PiguZMusic/APIs/Track/getAllTracks.php?modules[]=genre&modules[]=artist");
+                                                    xhr.open("GET", "<?php echo $domain; ?>APIs/Track/getAllTracks.php?modules[]=genre&modules[]=artist");
                                                     xhr.setRequestHeader("Accept", "/");
                                                     var data = "";
                                                     xhr.onreadystatechange = function () {

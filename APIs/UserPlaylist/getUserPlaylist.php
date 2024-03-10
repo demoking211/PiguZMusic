@@ -10,13 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] === "GET")
 
         $errorController = new ErrorController();
 
-        $user_role = $_SESSION['user_role_id'];
-        if($user_role != 1)
-        {
-            echo $errorController->index(403, [], ["Forbidden: You don't have permission to access this resource."]);
-            die();
-        }
-
         $userPlaylist_id = trim(isset($_GET["userPlaylistId"]) ? $_GET["userPlaylistId"] : "");
         $playlist_id = trim(isset($_GET["playlistId"]) ? $_GET["playlistId"] : "");
         $user_id = trim(isset($_GET["userId"]) ? $_GET["userId"] : "");
