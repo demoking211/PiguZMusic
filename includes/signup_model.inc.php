@@ -55,12 +55,6 @@ function set_user(object $pdo, string $username, string $password, string $email
     $query2 = "INSERT INTO `userroles` (`user_id`, `role_id`) VALUES (:user_id, :role_id);";
     $stmt = $pdo->prepare($query2);
 
-    $options = [
-        'cost' => 12
-    ];
-
-    $hashedPassword = password_hash($password, PASSWORD_BCRYPT, $options);
-
     $stmt->bindParam(":user_id", $id);
     $stmt->bindParam(":role_id", $role_id);
 
