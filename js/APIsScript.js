@@ -161,7 +161,7 @@ $(document).ready(function(){
             formData.append('thumbnail', $('#playlist-thumbnail')[0].files[0]);
         }
 
-        if(formData.get("title") != "" && formData.get("description") != "" && $('#playlist-thumbnail')[0].files[0])
+        if(formData.get("title") != "" && formData.get("description") != "")
         {
             $.ajax({
                 url:"./APIs/Playlist/createPlaylist.php",

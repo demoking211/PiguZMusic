@@ -60,25 +60,32 @@ require_once 'includes/config.php';
                                                         </div>
                                                         <div class="btn-group gap-4">
                                                             <button class="main-btn"><i class="fa fa-play" aria-hidden="true"></i> Play</button>
-                                                            <button class="sub-btn" type="button" data-bs-toggle="modal" data-bs-target="#addNew">Add New Playlist</button>
+                                                            <button class="sub-btn" type="button" data-bs-toggle="modal" data-bs-target="#createPlaylistModal">Add New Playlist</button>
                                                         </div>
                                                     </div>
                                                     <!-- Modal -->
-                                                    <div class="modal fade" id="addNew" tabindex="-1" aria-labelledby="addNewPlaylist" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered">
+                                                    <div style="" class="modal fade" id="createPlaylistModal" tabindex="-1" aria-labelledby="createPlaylistModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h1 class="modal-title fs-5 text-black" id="addNewPlaylist">Add New Playlist</h1>
+                                                                    <h1 class="modal-title fs-5" id="createPlaylistModalLabel">New playlist</h1>
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <form class="addPlaylist text-black" action="">
-                                                                        <label for="title">Title</label>
-                                                                        <input type="text" id="title" name="title" placeholder="Enter a title..">
-                                                                        <label for="description">Description</label>
-                                                                        <textarea name="description" id="description" placeholder="Enter some description.."></textarea>
-                                                                        <input type="submit" name="submit" value="Submit">
+                                                                    <form>
+                                                                    <div class="mb-3">
+                                                                        <label for="playlist-title" class="col-form-label">Title:</label>
+                                                                        <input type="text" class="form-control" id="playlist-title">
+                                                                    </div>
+                                                                    <div class="mb-3">
+                                                                        <label for="playlist-description" class="col-form-label">Description:</label>
+                                                                        <textarea class="form-control" id="playlist-description"></textarea>
+                                                                    </div>
                                                                     </form>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                    <button type="button" class="btn btn-light" id="create-playlist-btn">Create</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -554,7 +561,7 @@ require_once 'includes/config.php';
                         function getUserPlaylist() {
                             datas = [];
                             let xhr = new XMLHttpRequest();
-                            xhr.open("GET", "http://localhost/PiguZMusic/APIs/Playlist/getAllPlaylists.php?mode=user");
+                            xhr.open("GET", "<?php echo $domain; ?>APIs/Playlist/getAllPlaylists.php?mode=user");
                             xhr.setRequestHeader("Accept", "/");
                             var data = "";
                             xhr.onreadystatechange = function () {
@@ -577,6 +584,50 @@ require_once 'includes/config.php';
                             };
                             xhr.send();
                         }
+                    });
+
+                    $(document).ready(function(){
+                        $('#createPlaylistModal').on('hidden.bs.modal', function (e) {
+                            // Clear input fields
+                            $('#playlist-title').val('');
+                            $('#playlist-description').val('');
+                        });
+
+                        $("#create-playlist-btn").click(function()
+                        {
+                            var data = 
+                            {
+                                title: $('#playlist-title').val(),
+                                description: $('#playlist-description').val(),
+                                isUserPlaylist: 1
+                            }
+                            var formData = new FormData();
+                            for (var item in data) {
+                                formData.append(item, data[item]);
+                            }
+
+                            if(formData.get("title") != "" && formData.get("description") != "")
+                            {
+                                $.ajax({
+                                    url:"./APIs/Playlist/createPlaylist.php",
+                                    method:"POST",
+                                    data:formData,
+                                    contentType: false,
+                                    processData: false,
+                                    success:function(response)
+                                    {
+                                        $('#createPlaylistModal').modal('hide');
+                                        $('#pills-profile-tab').click();
+                                        var maxScrollHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+                                        // Scroll the document to the bottom
+                                        window.scrollTo({
+                                            top: maxScrollHeight,
+                                            behavior: 'smooth' // Optional smooth scrolling effect
+                                        });
+                                    }
+                                });
+                            }
+                        });
                     });
                 </script>
             </div>
