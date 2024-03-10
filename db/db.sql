@@ -112,7 +112,7 @@ CREATE TABLE `UserPlayLists` (
 
 CREATE TABLE `Tracks` (
   `id` char(38) NOT NULL ,
-  `genre_id` int NOT NULL,
+  `genre_id` char(38) NOT NULL,
   `name` varchar(255)  NOT NULL,
   `description` text NOT NULL,
   `thumbnail_path` text NULL,
