@@ -8,6 +8,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
         require_once '../../includes/config.php';
         require_once '../../includes/dbh.inc.php';
 
+        $errorController = new ErrorController();
+
+        $user_role = $_SESSION['user_role_id'];
+        if($user_role != 1)
+        {
+            echo $errorController->index(403, [], ["Forbidden: You don't have permission to access this resource."]);
+            die();
+        }
+
         $track_id = isset($_POST["trackId"]) ? $_POST["trackId"] : "";
 
         $query = "SELECT * FROM `tracks` WHERE `id` = :track_id";
@@ -19,8 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
         $stmt->execute();
 
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        $errorController = new ErrorController();
         
         if(!empty($data))
         {

@@ -8,6 +8,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
         require_once '../../includes/config.php';
         require_once '../../includes/dbh.inc.php';
 
+        $errorController = new ErrorController();
+
+        $user_role = $_SESSION['user_role_id'];
+        if($user_role != 1)
+        {
+            echo $errorController->index(403, [], ["Forbidden: You don't have permission to access this resource."]);
+            die();
+        }
+
         $id = trim(isset($_POST["id"]) ? $_POST["id"] : "");
         $genre_id = trim(isset($_POST["genreId"]) ? $_POST["genreId"] : "");
         $title = trim(isset($_POST["title"]) ? $_POST["title"] : "");
@@ -22,8 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST")
         $stmt->execute();
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        $errorController = new ErrorController();
         
         if(!empty($result))
         {
