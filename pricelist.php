@@ -1,3 +1,7 @@
+<?php
+require_once 'includes/config.php';
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,7 +19,7 @@
                 <div class = "price-col">
                     <p>Standard</p>
                     <div class="price_box">
-                        <div><span>RM</span>10.00</div>
+                        <div>FREE</div>
                         <div>/MONTHLY</div>
                     </div>
                     <ul class="feature_bar list-unstyled text-start">
@@ -25,7 +29,7 @@
                         <li><i class="fa fa-times"></i><span>Allow quality solution</span></li>
                         <li><i class="fa fa-times"></i><span>Offline Listening Plan</span></li>
                     </ul>
-                    <button><i class = "fa fa-check"></i></button>
+                    <button disable ><i class = "fa fa-check"></i></button>
                 </div>
                 <div class = "price-col">
                     <p>Premium</p>
@@ -40,7 +44,27 @@
                         <li><i class="fa fa-check"></i><span>Allow quality solution</span></li>
                         <li><i class="fa fa-check"></i><span>Offline Listening Plan</span></li>
                     </ul>
-                    <button>PURCHASE</button>
+                    <button id="update-user-role" data-role-id="2" name="update-user-role"><a href="/PiguZMusic/index.php" >PURCHASE</a></button>
+
+                    <script>
+                         $("#update-user-role").click(function()
+                        {
+                            var formData = new FormData();
+
+                            formData.append("userId", "<?php echo $_SESSION["user_id"]; ?>");
+                            $.ajax({
+                                    url:"./includes/update_user_role.php",
+                                    method:"POST",
+                                    data:formData,
+                                    contentType: false,
+                                    processData: false,
+                                    success:function(response)
+                                    {
+                                        console.log(response)
+                                    }
+                                });
+                        });
+                    </script>
                 </div>
             </div>
         </div>
