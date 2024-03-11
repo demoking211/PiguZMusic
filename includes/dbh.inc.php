@@ -1,8 +1,8 @@
 <?php
 
 // Reminder: MySQL port
-$host = 'localhost:4306';
-$dbname = 'piguztestdb';
+$host = 'localhost:3306';
+$dbname = 'piguz_db';
 $dbusername = 'root';
 $dbpassword = '';
 
